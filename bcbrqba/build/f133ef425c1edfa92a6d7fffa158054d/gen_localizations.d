@@ -1,0 +1,1 @@
+ /Users/sm/Desktop/BCBR-Q-Bank-App/bcbrqba/.dart_tool/flutter_gen/gen_l10n/app_localizations_en.dart /Users/sm/Desktop/BCBR-Q-Bank-App/bcbrqba/.dart_tool/flutter_gen/gen_l10n/app_localizations.dart:  /Users/sm/Desktop/BCBR-Q-Bank-App/bcbrqba/l10n.yaml /Users/sm/Desktop/BCBR-Q-Bank-App/bcbrqba/lib/src/localization/app_en.arb
