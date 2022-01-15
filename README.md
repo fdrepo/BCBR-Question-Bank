@@ -2,8 +2,8 @@
 <img src="https://github.com/fdrepo/www.flutterdoctor.com/blob/99ed3004fceb2fa646efc2cb1d07ef30936d92c2/icons/BCBRCBlue.png" width="100">
 
 ## Basic Course in Biomedical Research 
-* Its conducted by IIT madras, A MD/MS faculty PG students can register through NPTEL Portal.
-* Its conducted in Cycles, Questions and sometimes chapters are improved in each cycle.  
+* Its conducted by IIT madras, for MD/MS students and faculty.
+* Its conducted in Cycles. Questions, answers and chapters are improved every cycle.  
 * Each cycle covers topics which are essential process and concepts of medical research.
 * Ongoing Cycle  : [BCBCR 5th Cycle](https://onlinecourses.nptel.ac.in/noc21_md05/preview)
 
