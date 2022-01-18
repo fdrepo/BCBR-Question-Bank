@@ -12,10 +12,3 @@
 
 # Documentation
 [BCBR](https://github.com/fdrepo/flutterdoctor.com/blob/b471369a6b2b491561c9d57f6f54492310a78b33/docs/BCBR/BCBR.md)
-
-```mermaid
-graph LR
-    A --- B
-    B-->C[fa:fa-ban forbidden]
-    B-->D(fa:fa-spinner);
-```
