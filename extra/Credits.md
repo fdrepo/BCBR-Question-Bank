@@ -1,3 +1,12 @@
 Github Contributor Credits
-Sunil Mathew 
 
+Devolopers: 
+
+
+Doctors: 
+
+
+Educators: 
+
+
+Students:
