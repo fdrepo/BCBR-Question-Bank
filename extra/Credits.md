@@ -1,7 +1,7 @@
 Contributor Credits
 
 
-# Devolopers: 
+# Developers: 
 
 
 # Doctors: 
