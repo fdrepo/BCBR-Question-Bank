@@ -1,13 +1,13 @@
 Contributor Credits
 
 
-Devolopers: 
+# Devolopers: 
 
 
-Doctors: 
+# Doctors: 
 
 
-Educators: 
+# Educators: 
 
 
-Students:
+# Students:
