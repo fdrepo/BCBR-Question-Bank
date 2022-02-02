@@ -1,8 +1,12 @@
-import 'package:fd_bcbr/csv_mcq_data_repo.dart';
-import 'package:fd_bcbr/mcq_data_repo.dart';
-
-import 'mcq.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'repos/csv_mcq_data_repo.dart';
+import 'repos/mcq_data_repo.dart';
+import 'mcq.dart';
+
+final mcqsProvider = StateNotifierProvider<MCQProvider, MCQState>((ref) {
+  return MCQProvider();
+});
 
 abstract class MCQState {}
 

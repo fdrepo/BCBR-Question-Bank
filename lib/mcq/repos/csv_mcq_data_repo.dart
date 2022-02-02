@@ -1,7 +1,7 @@
 import 'package:csv/csv.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'mcq.dart';
+import '../mcq.dart';
 import 'mcq_data_repo.dart';
 
 class CsvMcqDataRepo extends MCQDataRepo {
