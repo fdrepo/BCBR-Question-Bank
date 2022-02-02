@@ -15,7 +15,6 @@ class MCQLoading extends MCQState {}
 class MCQLoadedList extends MCQState {
   final List<String> tags;
   final List<MCQ> mcqs;
-
   MCQLoadedList(this.tags, this.mcqs);
 }
 
@@ -33,7 +32,6 @@ class MCQProvider extends StateNotifier<MCQState> {
     }
 
     final tags = tagsSet.toList();
-
     state = MCQLoadedList(tags, mcqs);
   }
 
