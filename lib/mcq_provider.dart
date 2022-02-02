@@ -1,6 +1,5 @@
 import 'package:fd_bcbr/csv_mcq_data_repo.dart';
 import 'package:fd_bcbr/mcq_data_repo.dart';
-
 import 'mcq.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -29,7 +28,6 @@ class MCQProvider extends StateNotifier<MCQState> {
     }
 
     final tags = tagsSet.toList();
-
     state = MCQLoadedList(tags, mcqs);
   }
 

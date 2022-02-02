@@ -1,5 +1,4 @@
 import 'package:fd_bcbr/csv_mcq_data_repo.dart';
-import 'package:fd_bcbr/mcq.dart';
 import 'package:fd_bcbr/mcq_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -34,7 +33,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     repo.getMCQs();
     return Scaffold(
-      appBar: AppBar(title: const Text("MCQ")),
+      appBar: AppBar(title: const Text("List of Chapters")),
       body: const MCQList(),
     );
   }
