@@ -17,12 +17,11 @@ class CsvMcqDataRepo extends MCQDataRepo {
 
 // Get each MCQ out of csv , Assign tags, questions, correct ans and wrong ans.
 // 1 Loops List of rows > 2 Loops single row > Put MCQs Fields to MCQ Object
-    for (final row in csvData.sublist(1)) {
+    for (final row in csvData.sublist(1)) { // 1 loop 
       final correctOptions = row[7] as String;
       final correctAnswers = <String>[];
       final wrongAnswers = <String>[];
-      for (int i = 3; i <= 6; i++) {
-        //
+      for (int i = 3; i <= 6; i++) { // 2 n-loop 
         final option = csvData[0][i]; // A B C D
         if (option == correctOptions) {
           correctAnswers.add(row[i].toString()); // row[i]
@@ -30,7 +29,6 @@ class CsvMcqDataRepo extends MCQDataRepo {
           wrongAnswers.add(row[i].toString());
         }
       }
-
       mcqs.add(
         MCQ(
           questionNumber: row[0].toString(),
@@ -41,7 +39,6 @@ class CsvMcqDataRepo extends MCQDataRepo {
         ),
       );
     }
-
     return mcqs;
   }
 }

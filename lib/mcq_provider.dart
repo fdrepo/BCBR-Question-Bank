@@ -3,14 +3,17 @@ import 'package:fd_bcbr/mcq_data_repo.dart';
 import 'mcq.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-abstract class MCQState {}
+abstract class MCQState {
 
-class MCQLoading extends MCQState {}
+}
+
+class MCQLoading extends MCQState {
+
+}
 
 class MCQLoadedList extends MCQState {
   final List<String> tags;
   final List<MCQ> mcqs;
-
   MCQLoadedList(this.tags, this.mcqs);
 }
 
