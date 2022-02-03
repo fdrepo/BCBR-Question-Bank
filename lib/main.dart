@@ -1,71 +1,53 @@
-import 'package:fd_bcbr/mcq/mcq_screen.dart';
+import 'package:fd_bcbr/mcqs/quiz/quiz_middleware.dart';
+import 'package:fd_bcbr/mcqs/tags/tags_actions.dart';
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 
-import 'mcq/repos/csv_mcq_data_repo.dart';
-// import 'mcq/mcq_provider.dart';
+import 'app_state.dart';
+import 'mcqs/quiz/quiz_actions.dart';
+import 'mcqs/quiz/quiz_reducer.dart';
+import 'mcqs/tags/tags_middleware.dart';
+import 'mcqs/tags/tags_reducer.dart';
+import 'mcqs/tags/tags_screen.dart';
+import 'repos/mcq_data_repo/csv_mcq_data_repo.dart';
 
-void main() {
-  runApp(const ProviderScope(
-    child: MyApp(),
-  ));
+Future<void> main() async {
+  final repo = CsvMcqDataRepo();
+  final remoteDevTools = RemoteDevToolsMiddleware('localhost:8000');
+
+  final store = Store<AppState>(
+    combineReducers<AppState>([
+      TypedReducer<AppState, TagsActions>(tagsReducer),
+      TypedReducer<AppState, QuizActions>(quizReducer),
+    ]),
+    initialState: AppState.initial(),
+    middleware: [
+      TagsMiddleware(repo),
+      QuizMiddleware(repo: repo, mcqsCount: 10),
+      remoteDevTools,
+    ],
+  );
+
+  remoteDevTools.store = store;
+  await (remoteDevTools.connect()).timeout(const Duration(seconds: 10));
+
+  runApp(MyApp(store: store));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, required this.store}) : super(key: key);
+
+  final Store<AppState> store;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomeScreen(),
+    return StoreProvider(
+      store: store,
+      child: const MaterialApp(
+        home: TagsScreen(),
+      ),
     );
   }
 }
-
-class HomeScreen extends StatelessWidget {
-  final repo = CsvMcqDataRepo();
-
-  HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    repo.getMCQs();
-    return Scaffold(
-      appBar: AppBar(title: const Text("MCQ")),
-      body: const QuizScreen(),
-    );
-  }
-}
-
-// class MCQList extends ConsumerWidget {
-//   const MCQList({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final mcqsState = ref.watch(mcqsProvider);
-
-//     if (mcqsState is MCQLoadedList) {
-//       final tags = mcqsState.tags;
-//       return ListView.builder(
-//         itemCount: tags.length,
-//         itemBuilder: (context, index) {
-//           final tag = tags[index];
-//           return ListTile(
-//             title: Text('#$tag'),
-//           );
-//         },
-//       );
-//     } else {
-//       return const Center(child: CircularProgressIndicator());
-//     }
-//   }
-// }
-
-// class MCQScreen extends StatelessWidget {
-//   const MCQScreen({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
