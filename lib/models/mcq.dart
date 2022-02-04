@@ -17,6 +17,8 @@ class MCQ with _$MCQ {
 
   late final allAnswers = [...correctAnswers, ...wrongAnswers]..shuffle();
 
+  bool get isMultipleChoice => correctAnswers.length > 1;
+
   factory MCQ.fromJson(Map<String, dynamic> json) => _$MCQFromJson(json);
 }
 // List of Correct option , List of Wrong question 

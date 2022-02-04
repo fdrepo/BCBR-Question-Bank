@@ -34,9 +34,21 @@ class QuizState with _$QuizState {
   bool get isAnswered =>
       status == QuizStatus.correct || status == QuizStatus.incorrect;
 
-  bool get isCompleted {
+  bool get isCompleted => status == QuizStatus.complete;
+
+  bool get allMcqsAnswered {
     final mcqs = this.mcqs;
-    return mcqs != null && (mcqs.isEmpty || mcqs.length == currentMcqIndex + 1);
+    return mcqs != null &&
+        mcqs.length ==
+            correctlyAnsweredMcqIndices.length +
+                incorrectlyAnsweredMcqIndices.length;
+  }
+
+  MCQ? get currentMcq {
+    final mcqs = this.mcqs;
+    if (mcqs != null && currentMcqIndex < mcqs.length) {
+      return mcqs[currentMcqIndex];
+    }
   }
 
   factory QuizState.fromJson(Map<String, dynamic> json) =>

@@ -28,20 +28,26 @@ AppState _loadedMcqs(AppState state, QuizActionsLoadedMcqs action) {
 
 AppState _select(AppState state, QuizActionsSelect action) {
   final quiz = state.quiz;
-  return state.copyWith(
+  if (quiz.status != QuizStatus.initial) return state;
+
+  final currentMcq = quiz.currentMcq;
+  if (currentMcq == null) return state;
+
+  final afterSelectState = state.copyWith(
     quiz: quiz.copyWith(
-      selectedAnswers: quiz.selectedAnswers..add(action.answer),
+      selectedAnswers: [...quiz.selectedAnswers, action.answer],
     ),
   );
+
+  if (currentMcq.isMultipleChoice) {
+    return afterSelectState;
+  } else {
+    return _submit(afterSelectState, const QuizActionsSubmit());
+  }
 }
 
 AppState _submit(AppState state, QuizActionsSubmit action) {
   final quiz = state.quiz;
-
-  if (quiz.isCompleted) {
-    return state.copyWith(quiz: quiz.copyWith(status: QuizStatus.complete));
-  }
-
   final mcqs = quiz.mcqs;
   if (mcqs == null) return state;
 
@@ -52,8 +58,8 @@ AppState _submit(AppState state, QuizActionsSubmit action) {
     return res && currentQuestion.correctAnswers.contains(ans);
   });
 
-  final correctlyAnsweredMcqIndices = quiz.correctlyAnsweredMcqIndices;
-  final incorrectlyAnsweredMcqIndices = quiz.incorrectlyAnsweredMcqIndices;
+  final correctlyAnsweredMcqIndices = [...quiz.correctlyAnsweredMcqIndices];
+  final incorrectlyAnsweredMcqIndices = [...quiz.incorrectlyAnsweredMcqIndices];
   if (isCorrect) {
     correctlyAnsweredMcqIndices.add(currentMcqIndex);
   } else {
@@ -71,18 +77,18 @@ AppState _submit(AppState state, QuizActionsSubmit action) {
 
 AppState _nextMcq(AppState state, QuizActionsNextMcq action) {
   final quiz = state.quiz;
+  if (!quiz.isAnswered) return state;
 
   final mcqs = quiz.mcqs;
   if (mcqs == null) return state;
 
-  if (quiz.isCompleted) {
-    return state.copyWith(quiz: quiz.copyWith(status: QuizStatus.complete));
-  }
+  final nextMcqIndex = quiz.currentMcqIndex + 1;
+  bool isCompleted = nextMcqIndex >= mcqs.length;
 
   return state.copyWith(
     quiz: quiz.copyWith(
-      currentMcqIndex: quiz.currentMcqIndex + 1,
-      status: QuizStatus.initial,
+      currentMcqIndex: nextMcqIndex,
+      status: isCompleted ? QuizStatus.complete : QuizStatus.initial,
       selectedAnswers: [],
     ),
   );

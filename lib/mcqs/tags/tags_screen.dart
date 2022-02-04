@@ -37,7 +37,8 @@ class TagsScreen extends StatelessWidget {
         return Card(
           child: ListTile(
             title: Text('# $tag'),
-            onTap: () => Navigator.of(context).push(QuizScreen.route(tag)),
+            onTap: () =>
+                Navigator.of(context).push<void>(QuizScreen.route(tag)),
           ),
         );
       },

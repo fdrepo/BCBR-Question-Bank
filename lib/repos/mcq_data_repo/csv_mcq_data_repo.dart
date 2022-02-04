@@ -14,7 +14,7 @@ class CsvMcqDataRepo extends McqDataRepo {
     }
 
     final rawCsvFile = await rootBundle.loadString('assets/data.csv');
-    final csvData = const CsvToListConverter().convert(rawCsvFile);
+    final csvData = const CsvToListConverter().convert<dynamic>(rawCsvFile);
 
     final mcqs = <MCQ>[];
     for (final row in csvData.sublist(1)) {
@@ -22,7 +22,7 @@ class CsvMcqDataRepo extends McqDataRepo {
       final correctAnswers = <String>[];
       final wrongAnswers = <String>[];
       for (int i = 3; i <= 6; i++) {
-        final option = csvData[0][i];
+        final option = csvData[0][i] as String;
         if (option == correctOption) {
           correctAnswers.add(row[i].toString());
         } else {
@@ -32,7 +32,7 @@ class CsvMcqDataRepo extends McqDataRepo {
       mcqs.add(
         MCQ(
           questionNumber: row[0].toString(),
-          categoricalTags: [row[1]],
+          categoricalTags: [row[1] as String],
           question: row[2].toString(),
           correctAnswers: correctAnswers,
           wrongAnswers: wrongAnswers,

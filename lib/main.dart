@@ -1,13 +1,13 @@
-import 'package:fd_bcbr/mcqs/quiz/quiz_middleware.dart';
-import 'package:fd_bcbr/mcqs/tags/tags_actions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:redux_remote_devtools/redux_remote_devtools.dart';
+// import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 
 import 'app_state.dart';
 import 'mcqs/quiz/quiz_actions.dart';
+import 'mcqs/quiz/quiz_middleware.dart';
 import 'mcqs/quiz/quiz_reducer.dart';
+import 'mcqs/tags/tags_actions.dart';
 import 'mcqs/tags/tags_middleware.dart';
 import 'mcqs/tags/tags_reducer.dart';
 import 'mcqs/tags/tags_screen.dart';
@@ -15,7 +15,7 @@ import 'repos/mcq_data_repo/csv_mcq_data_repo.dart';
 
 Future<void> main() async {
   final repo = CsvMcqDataRepo();
-  final remoteDevTools = RemoteDevToolsMiddleware('localhost:8000');
+  // final remoteDevTools = RemoteDevToolsMiddleware('localhost:8000');
 
   final store = Store<AppState>(
     combineReducers<AppState>([
@@ -26,12 +26,12 @@ Future<void> main() async {
     middleware: [
       TagsMiddleware(repo),
       QuizMiddleware(repo: repo, mcqsCount: 10),
-      remoteDevTools,
+      // remoteDevTools,
     ],
   );
 
-  remoteDevTools.store = store;
-  await (remoteDevTools.connect()).timeout(const Duration(seconds: 10));
+  // remoteDevTools.store = store;
+  // await (remoteDevTools.connect()).timeout(const Duration(seconds: 10));
 
   runApp(MyApp(store: store));
 }
@@ -45,8 +45,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreProvider(
       store: store,
-      child: const MaterialApp(
-        home: TagsScreen(),
+      child: MaterialApp(
+        home: const TagsScreen(),
+        theme: ThemeData(scaffoldBackgroundColor: Colors.grey.shade200),
       ),
     );
   }
