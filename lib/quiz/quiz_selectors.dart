@@ -1,18 +1,5 @@
-import '../../app_state.dart';
-import '../../models/mcq.dart';
-import 'quiz_state.dart';
-
-class PageData {
-  final int position;
-  final List<MCQ>? mcqs;
-
-  PageData(this.position, this.mcqs);
-}
-
-PageData getPageData(AppState state) {
-  final quiz = state.quiz;
-  return PageData(quiz.currentMcqIndex, quiz.mcqs);
-}
+import '../state/app_state.dart';
+import '../state/quiz_state.dart';
 
 enum NextPageStatus { notShown, submit, nextQuestion, showResult }
 

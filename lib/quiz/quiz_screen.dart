@@ -3,11 +3,11 @@ import 'package:flutter_hooks/flutter_hooks.dart' hide Store;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../../app_state.dart';
-import '../../models/mcq.dart';
+import '../state/app_state.dart';
+import '../state/quiz_state.dart';
+import '../models/mcq.dart';
 import 'quiz_actions.dart';
 import 'quiz_selectors.dart';
-import 'quiz_state.dart';
 
 class QuizScreen extends HookWidget {
   const QuizScreen({
@@ -75,7 +75,7 @@ class QuizScreen extends HookWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.all(8.0),
       child: ElevatedButton(onPressed: onTap, child: Text(title)),
     );
   }
@@ -159,13 +159,17 @@ class McqView extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return SingleChildScrollView(
+      padding: const EdgeInsets.all(8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Card(
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(mcq.question, style: theme.textTheme.headline6),
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Q${mcq.questionNumber}. ${mcq.question}',
+                style: theme.textTheme.headline6,
+              ),
             ),
           ),
           for (final answer in mcq.allAnswers)

@@ -23,10 +23,13 @@ class CsvMcqDataRepo extends McqDataRepo {
       final wrongAnswers = <String>[];
       for (int i = 3; i <= 6; i++) {
         final option = csvData[0][i] as String;
-        if (option == correctOption) {
-          correctAnswers.add(row[i].toString());
-        } else {
-          wrongAnswers.add(row[i].toString());
+        final answer = row[i].toString();
+        if (answer.isNotEmpty) {
+          if (option == correctOption) {
+            correctAnswers.add(answer);
+          } else {
+            wrongAnswers.add(answer);
+          }
         }
       }
       mcqs.add(

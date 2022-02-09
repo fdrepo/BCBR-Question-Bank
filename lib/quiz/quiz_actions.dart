@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../models/mcq.dart';
+import '../models/mcq.dart';
 
 part 'quiz_actions.freezed.dart';
 

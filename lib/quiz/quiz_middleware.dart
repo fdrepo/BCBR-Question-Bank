@@ -1,7 +1,7 @@
 import 'package:redux/redux.dart';
 
-import '../../repos/mcq_data_repo/mcq_data_repo.dart';
-import '../../app_state.dart';
+import '../repos/mcq_data_repo/mcq_data_repo.dart';
+import '../state/app_state.dart';
 import 'quiz_actions.dart';
 
 class QuizMiddleware extends MiddlewareClass<AppState> {

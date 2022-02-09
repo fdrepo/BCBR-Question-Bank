@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'mcqs/quiz/quiz_state.dart';
-import 'mcqs/tags/tags_state.dart';
+import 'quiz_state.dart';
+import 'tags_state.dart';
 
 part 'app_state.freezed.dart';
 part 'app_state.g.dart';

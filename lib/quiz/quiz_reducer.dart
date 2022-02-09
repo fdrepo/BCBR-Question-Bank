@@ -1,6 +1,6 @@
-import '../../app_state.dart';
+import '../state/app_state.dart';
 import 'quiz_actions.dart';
-import 'quiz_state.dart';
+import '../state/quiz_state.dart';
 
 AppState quizReducer(AppState state, QuizActions action) {
   return action.map(
