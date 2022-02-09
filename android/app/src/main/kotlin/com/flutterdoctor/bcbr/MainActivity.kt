@@ -1,4 +1,4 @@
-package com.example.fd_bcbr
+package com.flutterdoctor.bcbr
 
 import io.flutter.embedding.android.FlutterActivity
 

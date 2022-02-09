@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.fd_bcbr">
+    package="com.flutterdoctor.bcbr">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="fd_bcbr"
         android:name="${applicationName}"
