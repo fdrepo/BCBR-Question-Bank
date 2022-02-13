@@ -23,6 +23,10 @@ extension on TagsFailure? {
 class TagsScreen extends StatelessWidget {
   const TagsScreen({Key? key}) : super(key: key);
 
+  static MaterialPageRoute<void> route() {
+    return MaterialPageRoute<void>(builder: (_) => const TagsScreen());
+  }
+
   void _loadTags(Store<AppState> store) {
     store.dispatch(const TagsAction.load());
   }
