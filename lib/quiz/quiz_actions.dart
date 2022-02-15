@@ -14,4 +14,5 @@ class QuizActions with _$QuizActions {
   const factory QuizActions.select(String answer) = QuizActionsSelect;
   const factory QuizActions.submit() = QuizActionsSubmit;
   const factory QuizActions.nextMcq() = QuizActionsNextMcq;
+  // TODO: QuizAction.backMCQ
 }

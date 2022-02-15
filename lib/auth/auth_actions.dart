@@ -5,6 +5,9 @@ part 'auth_actions.g.dart';
 
 @freezed
 class AuthAction with _$AuthAction {
+
+  // TODO: AuthAction.checkRepo
+  
   const factory AuthAction.verifyPhoneNumber(String phoneNumber) =
       AuthActionVerifyPhoneNumber;
 
