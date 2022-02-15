@@ -1,7 +1,7 @@
 import '../state/app_state.dart';
 import '../state/quiz_state.dart';
 
-enum NextPageStatus { notShown, submit, nextQuestion, showResult }
+]
 
 NextPageStatus getNextPageStatus(AppState state) {
   final quiz = state.quiz;

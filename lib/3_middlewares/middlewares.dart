@@ -4,15 +4,25 @@ import '../state/app_state.dart';
 import '../repos/mcq_data_repo/mcq_data_repo.dart';
 import 'tags_actions.dart';
 
-class TagsMiddleware implements MiddlewareClass<AppState> {
-  TagsMiddleware(this._repo);
+class Middleware implements MiddlewareClass<AppState> {
+  
+  Middleware({required this.repo,required this.mcqsCount});
 
-  final McqDataRepo _repo;
+  final McqDataRepo repo;
+  final int mcqsCount;
 
   @override
   void call(Store<AppState> store, dynamic action, NextDispatcher next) {
+
     if (action is TagsActionLoad) {
       _load(store, action);
+    }
+    if (action is QuizActionsLoadMcqs) {
+      final selectedTag = action.tag;
+      store.dispatch(const QuizActions.loadingMcqs());
+      repo.getMcqs(selectedTag, mcqsCount).then((mcqs) {
+        store.dispatch(QuizActions.loadedMcqs(selectedTag, mcqs));
+      });
     }
     next(action);
   }
@@ -26,4 +36,9 @@ class TagsMiddleware implements MiddlewareClass<AppState> {
       // TODO(navan33th): error handling.
     }
   }
+  
+
 }
+
+
+
