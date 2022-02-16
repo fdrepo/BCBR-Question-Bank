@@ -1,13 +1,15 @@
 import 'dart:async';
 
-enum AuthStatus { inital, awaitingCode, signingIn, authenticated, failure }
+import 'auth_state.dart';
+
+export 'auth_state.dart';
 
 abstract class PhoneAuthRepo {
   PhoneAuthRepo(this.phoneNumber);
 
   String phoneNumber;
 
-  Stream<AuthStatus> get status;
+  Stream<AuthState> get state;
 
   void sendCode();
 

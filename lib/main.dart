@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -13,10 +14,11 @@ import 'state/app_state.dart';
 import 'quiz/quiz_actions.dart';
 import 'quiz/quiz_middleware.dart';
 import 'quiz/quiz_reducer.dart';
+import 'repos/auth/phone_auth_repo.dart';
 import 'tags/tags_actions.dart';
 import 'tags/tags_middleware.dart';
 import 'tags/tags_reducer.dart';
-// import 'tags/tags_screen.dart';
+import 'tags/tags_screen.dart';
 import 'repos/mcq_data_repo/csv_mcq_data_repo.dart';
 
 Future<void> main() async {
@@ -24,6 +26,14 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  final user = await FirebaseAuth.instance.authStateChanges().first;
+  final authState = user != null
+      ? AuthState(
+          status: AuthStatus.authenticated,
+          uid: user.uid,
+          phoneNumber: user.phoneNumber!)
+      : AuthState.initial();
 
   final repo = CsvMcqDataRepo();
   // final remoteDevTools = RemoteDevToolsMiddleware<AppState>('192.168.1.9:8000');
@@ -34,7 +44,7 @@ Future<void> main() async {
       TypedReducer<AppState, QuizActions>(quizReducer),
       TypedReducer<AppState, AuthAction>(authReducer),
     ]),
-    initialState: AppState.initial(),
+    initialState: AppState.initial(authState),
     middleware: [
       TagsMiddleware(repo),
       QuizMiddleware(repo: repo, mcqsCount: 10),
@@ -59,7 +69,9 @@ class MyApp extends StatelessWidget {
     return StoreProvider(
       store: store,
       child: MaterialApp(
-        home: const AuthScreen(),
+        home: store.state.auth.status == AuthStatus.authenticated
+            ? const TagsScreen()
+            : const AuthScreen(),
         debugShowCheckedModeBanner: false,
         theme: ThemeData(scaffoldBackgroundColor: Colors.grey.shade200),
       ),

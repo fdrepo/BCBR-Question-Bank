@@ -9,23 +9,16 @@ import 'auth_actions.dart';
 
 class AuthMiddleware extends MiddlewareClass<AppState> {
   PhoneAuthRepo? _repo;
-  StreamSubscription<AuthStatus>? _sub;
+  StreamSubscription<AuthState>? _sub;
 
   @override
   void call(Store<AppState> store, dynamic action, NextDispatcher next) {
-    if (action is AuthActionVerifyPhoneNumber) {
+    if (action is AuthActionSendOtp) {
+      _sendOtp(store, action);
+    } else if (action is AuthActionVerifyPhoneNumber) {
       _verifyPhoneNumber(store, action);
-    } else if (action is AuthActionUseOtp) {
-      _useOtp(store, action);
     }
     next(action);
-  }
-
-  void _useOtp(Store<AppState> store, AuthActionUseOtp action) {
-    var repo = _repo;
-    if (repo == null) return;
-
-    repo.verify(action.smsCode);
   }
 
   void _verifyPhoneNumber(
@@ -33,35 +26,29 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
     AuthActionVerifyPhoneNumber action,
   ) {
     var repo = _repo;
+    if (repo == null) return;
+
+    repo.verify(action.smsCode);
+  }
+
+  void _sendOtp(Store<AppState> store, AuthActionSendOtp action) {
+    var repo = _repo;
     if (repo != null) return;
 
     repo = FirebasePhoneAuthRepo(action.phoneNumber);
-    _sub = repo.status.listen((status) {
-      _dispatchAuthStatus(store, status);
+    _sub = repo.state.listen((state) {
+      _dispatchAuthStatus(store, state);
     });
 
     _repo = repo..sendCode();
   }
 
-  void _dispatchAuthStatus(Store<AppState> store, AuthStatus status) {
-    late final AuthAction action;
-    switch (status) {
-      case AuthStatus.inital:
-        action = const AuthAction.initial();
-        break;
-      case AuthStatus.awaitingCode:
-        action = const AuthAction.awaitingCode();
-        break;
-      case AuthStatus.signingIn:
-        action = const AuthAction.signingIn();
-        break;
-      case AuthStatus.authenticated:
-        action = const AuthAction.authenticated();
-        break;
-      case AuthStatus.failure:
-        action = const AuthAction.failure();
-        break;
+  void _dispatchAuthStatus(Store<AppState> store, AuthState state) {
+    if (state.status == AuthStatus.authenticated) {
+      _sub?.cancel();
+      _sub = null;
+      _repo = null;
     }
-    store.dispatch(action);
+    store.dispatch(AuthAction.setState(state));
   }
 }

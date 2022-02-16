@@ -7,10 +7,10 @@ import 'phone_auth_repo.dart';
 class FirebasePhoneAuthRepo extends PhoneAuthRepo {
   FirebasePhoneAuthRepo(String phoneNumber) : super(phoneNumber);
 
-  final _controller = StreamController<AuthStatus>();
+  final _controller = StreamController<AuthState>();
 
   @override
-  Stream<AuthStatus> get status => _controller.stream;
+  Stream<AuthState> get state => _controller.stream;
 
   String? _verificationId;
   int? _resendToken;
@@ -24,7 +24,7 @@ class FirebasePhoneAuthRepo extends PhoneAuthRepo {
       codeSent: _codeSent,
       codeAutoRetrievalTimeout: _codeAutoRetrievalTimeout,
     );
-    _controller.sink.add(AuthStatus.inital);
+    _controller.sink.add(AuthState.initial());
   }
 
   @override
@@ -61,21 +61,23 @@ class FirebasePhoneAuthRepo extends PhoneAuthRepo {
     FirebaseAuth.instance
         .signInWithCredential(credential)
         .then((userCredential) {
-      _controller.add(AuthStatus.authenticated);
-      print(userCredential.user?.uid);
+      _controller.add(AuthState(
+        status: AuthStatus.authenticated,
+        phoneNumber: phoneNumber,
+        uid: userCredential.user!.uid,
+      ));
     });
-    _controller.sink.add(AuthStatus.signingIn);
+    _controller.add(AuthState.initialWithStatus(AuthStatus.signingIn));
   }
 
   void _verificationFailed(FirebaseAuthException exception) {
-    print(exception);
-    _controller.sink.add(AuthStatus.failure);
+    _controller.add(AuthState.initialWithStatus(AuthStatus.failure));
   }
 
   void _codeSent(String verificationId, int? resendToken) {
     _verificationId = verificationId;
     _resendToken = resendToken;
-    _controller.sink.add(AuthStatus.awaitingCode);
+    _controller.add(AuthState.initialWithStatus(AuthStatus.awaitingCode));
   }
 
   void _codeAutoRetrievalTimeout(String verificationId) {

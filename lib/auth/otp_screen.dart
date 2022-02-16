@@ -1,4 +1,3 @@
-import 'package:fd_bcbr/tags/tags_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart' hide Store;
 import 'package:flutter_redux/flutter_redux.dart';
@@ -6,6 +5,7 @@ import 'package:redux/redux.dart';
 
 import '../repos/auth/phone_auth_repo.dart';
 import '../state/app_state.dart';
+import '../tags/tags_screen.dart';
 import 'auth_actions.dart';
 import 'auth_selector.dart';
 
@@ -24,12 +24,12 @@ class OtpScreen extends HookWidget {
   }
 
   void _verifyPhone(Store<AppState> store) {
-    store.dispatch(AuthAction.verifyPhoneNumber(phoneNumber));
+    store.dispatch(AuthAction.sendOtp(phoneNumber));
   }
 
   void _useOtp(BuildContext context, String smsCode) {
     StoreProvider.of<AppState>(context, listen: false)
-        .dispatch(AuthAction.useOtp(smsCode));
+        .dispatch(AuthAction.verifyPhoneNumber(smsCode));
   }
 
   void Function()? _setupAuthenticatedStream(BuildContext context) {
@@ -55,7 +55,7 @@ class OtpScreen extends HookWidget {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: StoreConnector<AppState, AuthStatus>(
+          child: StoreConnector<AppState, AuthStatus?>(
             onInit: _verifyPhone,
             converter: (store) => authStatusSelector(store.state),
             builder: (context, status) {

@@ -1,29 +1,19 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../repos/auth/auth_state.dart';
 part 'auth_actions.freezed.dart';
 part 'auth_actions.g.dart';
 
 @freezed
 class AuthAction with _$AuthAction {
-
   // TODO: AuthAction.checkRepo
-  
-  const factory AuthAction.verifyPhoneNumber(String phoneNumber) =
+
+  const factory AuthAction.sendOtp(String phoneNumber) = AuthActionSendOtp;
+
+  const factory AuthAction.verifyPhoneNumber(String smsCode) =
       AuthActionVerifyPhoneNumber;
 
-  const factory AuthAction.useOtp(String smsCode) = AuthActionUseOtp;
-
-  const factory AuthAction.initial() = AuthActionInitial;
-
-  const factory AuthAction.awaitingCode() = AuthActionAwaitingCode;
-
-  const factory AuthAction.resendCode() = AuthActionResendCode;
-
-  const factory AuthAction.signingIn() = AuthActionSigningIn;
-
-  const factory AuthAction.authenticated() = AuthActionAuthenticated;
-
-  const factory AuthAction.failure() = AuthActionFailure;
+  const factory AuthAction.setState(AuthState state) = AuthActionSetState;
 
   factory AuthAction.fromJson(Map<String, dynamic> json) =>
       _$AuthActionFromJson(json);
