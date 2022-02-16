@@ -1,5 +1,4 @@
-import '../repos/auth/phone_auth_repo.dart';
-import '../state/app_state.dart';
+import '../app_state/app_state.dart';
 import 'auth_actions.dart';
 
 AppState authReducer(AppState state, AuthAction action) {

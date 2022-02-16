@@ -1,8 +1,9 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../models/mcq.dart';
+import '../../models/models.dart';
 
 part 'quiz_actions.freezed.dart';
+part 'quiz_actions.g.dart';
 
 @freezed
 class QuizActions with _$QuizActions {
@@ -15,4 +16,7 @@ class QuizActions with _$QuizActions {
   const factory QuizActions.submit() = QuizActionsSubmit;
   const factory QuizActions.nextMcq() = QuizActionsNextMcq;
   // TODO: QuizAction.backMCQ
+
+  factory QuizActions.fromJson(Map<String, dynamic> json) =>
+      _$QuizActionsFromJson(json);
 }

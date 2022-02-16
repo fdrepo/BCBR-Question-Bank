@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../state/tags_state.dart';
+import '../app_state/app_state.dart';
 
 part 'tags_actions.freezed.dart';
 part 'tags_actions.g.dart';

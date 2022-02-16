@@ -4,20 +4,12 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 // import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 
-import 'auth/auth_actions.dart';
-import 'auth/auth_middleware.dart';
-import 'auth/auth_reducer.dart';
-import 'auth/auth_screen.dart';
 import 'firebase_options.dart';
-import 'state/app_state.dart';
-import 'quiz/quiz_actions.dart';
-import 'quiz/quiz_middleware.dart';
-import 'quiz/quiz_reducer.dart';
-import 'tags/tags_actions.dart';
-import 'tags/tags_middleware.dart';
-import 'tags/tags_reducer.dart';
-// import 'tags/tags_screen.dart';
-import 'repos/mcq_data_repo/csv_mcq_data_repo.dart';
+import 'repo/repo.dart';
+import 'state/state.dart';
+import 'state/reducers.dart';
+import 'state/middleware.dart';
+import 'view/auth_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

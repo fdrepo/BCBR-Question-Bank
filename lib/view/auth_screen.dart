@@ -1,6 +1,7 @@
-import 'package:fd_bcbr/auth/otp_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+
+import 'otp_screen.dart';
 
 class AuthScreen extends HookWidget {
   const AuthScreen({Key? key}) : super(key: key);

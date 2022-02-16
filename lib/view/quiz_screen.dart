@@ -3,11 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart' hide Store;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../state/app_state.dart';
-import '../state/quiz_state.dart';
-import '../models/mcq.dart';
-import 'quiz_actions.dart';
-import 'quiz_selectors.dart';
+import '../models/models.dart';
+import '../state/state.dart';
 
 class QuizScreen extends HookWidget {
   const QuizScreen({

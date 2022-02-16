@@ -1,7 +1,7 @@
 import 'package:redux/redux.dart';
 
-import '../state/app_state.dart';
-import '../repos/mcq_data_repo/mcq_data_repo.dart';
+import '../../repo/repo.dart';
+import '../app_state/app_state.dart';
 import 'tags_actions.dart';
 
 class TagsMiddleware implements MiddlewareClass<AppState> {

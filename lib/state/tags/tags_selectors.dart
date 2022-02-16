@@ -1,5 +1,4 @@
-import '../state/app_state.dart';
-import '../state/tags_state.dart';
+import '../app_state/app_state.dart';
 
 class FilteredTagsView {
   FilteredTagsView({

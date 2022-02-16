@@ -1,6 +1,4 @@
-import '../state/app_state.dart';
-import '../state/quiz_state.dart';
-import '../state/tags_state.dart';
+import '../app_state/app_state.dart';
 import 'tags_actions.dart';
 
 AppState tagsReducer(AppState state, TagsAction action) {

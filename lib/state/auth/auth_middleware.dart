@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:redux/redux.dart';
 
-import '../repos/auth/firebase_phone_auth_repo.dart';
-import '../repos/auth/phone_auth_repo.dart';
-import '../state/app_state.dart';
+import '../../repo/repo.dart';
+import '../app_state/app_state.dart';
 import 'auth_actions.dart';
 
 class AuthMiddleware extends MiddlewareClass<AppState> {

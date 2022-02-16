@@ -1,13 +1,10 @@
-import 'package:fd_bcbr/tags/tags_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart' hide Store;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../repos/auth/phone_auth_repo.dart';
-import '../state/app_state.dart';
-import 'auth_actions.dart';
-import 'auth_selector.dart';
+import '../state/state.dart';
+import 'tags_screen.dart';
 
 class OtpScreen extends HookWidget {
   const OtpScreen({

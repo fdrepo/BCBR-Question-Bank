@@ -3,11 +3,8 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:redux/redux.dart';
 
-import '../state/app_state.dart';
-import '../state/tags_state.dart';
-import '../quiz/quiz_screen.dart';
-import 'tags_actions.dart';
-import 'tags_selectors.dart';
+import '../state/state.dart';
+import 'quiz_screen.dart';
 
 extension on TagsFailure? {
   String message(BuildContext context) {

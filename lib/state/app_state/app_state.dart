@@ -1,8 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../repos/auth/phone_auth_repo.dart';
+import '../../repo/repo.dart';
 import 'quiz_state.dart';
 import 'tags_state.dart';
+
+export '../../repo/repo.dart' show AuthStatus;
+export 'quiz_state.dart';
+export 'tags_state.dart';
 
 part 'app_state.freezed.dart';
 part 'app_state.g.dart';

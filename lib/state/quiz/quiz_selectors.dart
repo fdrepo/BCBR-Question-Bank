@@ -1,5 +1,4 @@
-import '../state/app_state.dart';
-import '../state/quiz_state.dart';
+import '../app_state/app_state.dart';
 
 enum NextPageStatus { notShown, submit, nextQuestion, showResult }
 
