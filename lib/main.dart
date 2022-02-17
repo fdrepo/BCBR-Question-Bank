@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:redux_remote_devtools/redux_remote_devtools.dart';
+// import 'package:redux_remote_devtools/redux_remote_devtools.dart';
 
 import 'auth/auth_actions.dart';
 import 'auth/auth_middleware.dart';
@@ -36,7 +36,7 @@ Future<void> main() async {
       : AuthState.initial();
 
   final repo = CsvMcqDataRepo();
-  final remoteDevTools = RemoteDevToolsMiddleware<AppState>('192.168.1.9:8000');
+  // final remoteDevTools = RemoteDevToolsMiddleware<AppState>('192.168.1.9:8000');
 
   final store = Store<AppState>(
     combineReducers<AppState>([
@@ -53,8 +53,8 @@ Future<void> main() async {
     ],
   );
 
-  remoteDevTools.store = store;
-  await (remoteDevTools.connect()).timeout(const Duration(seconds: 10));
+  // remoteDevTools.store = store;
+  // await (remoteDevTools.connect()).timeout(const Duration(seconds: 10));
 
   runApp(MyApp(store: store));
 }
