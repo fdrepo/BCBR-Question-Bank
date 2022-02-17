@@ -73,7 +73,19 @@ class MyApp extends StatelessWidget {
             ? const TagsScreen()
             : const AuthScreen(),
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(scaffoldBackgroundColor: Colors.grey.shade200),
+        theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            elevation: 0,
+            backgroundColor: Colors.grey.shade200,
+            titleTextStyle: Theme.of(context)
+                .textTheme
+                .headline6
+                ?.copyWith(color: Colors.black),
+            iconTheme:
+                Theme.of(context).iconTheme.copyWith(color: Colors.black),
+          ),
+          scaffoldBackgroundColor: Colors.grey.shade200,
+        ),
       ),
     );
   }

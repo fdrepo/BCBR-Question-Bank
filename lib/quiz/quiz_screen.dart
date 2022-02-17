@@ -119,7 +119,7 @@ class QuizScreenBody extends HookWidget {
       currentPageIndex.value = quiz.currentMcqIndex;
       pageController.animateToPage(
         currentPageIndex.value,
-        duration: const Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 100),
         curve: Curves.linear,
       );
     }
@@ -129,16 +129,28 @@ class QuizScreenBody extends HookWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: mcqs.length,
       itemBuilder: (context, index) {
-        return McqView(mcq: mcqs[index], answerStatus: getAnswerStatus(quiz));
+        return McqView(
+          questionNumber: index + 1,
+          totalQuestions: mcqs.length,
+          mcq: mcqs[index],
+          answerStatus: getAnswerStatus(quiz),
+        );
       },
     );
   }
 }
 
 class McqView extends StatelessWidget {
-  const McqView({Key? key, required this.mcq, required this.answerStatus})
-      : super(key: key);
+  const McqView({
+    Key? key,
+    required this.questionNumber,
+    required this.totalQuestions,
+    required this.mcq,
+    required this.answerStatus,
+  }) : super(key: key);
 
+  final int questionNumber;
+  final int totalQuestions;
   final MCQ mcq;
   final Map<String, AnswerStatus> answerStatus;
 
@@ -166,9 +178,29 @@ class McqView extends StatelessWidget {
           Card(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Q${mcq.questionNumber}. ${mcq.question}',
-                style: theme.textTheme.headline6,
+              child: Wrap(
+                spacing: 10,
+                children: [
+                  Chip(
+                    label: Text('$questionNumber/$totalQuestions'),
+                    padding: EdgeInsets.zero,
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  ...mcq.question.split(' ').map(
+                    (s) {
+                      return Chip(
+                        backgroundColor: theme.cardColor,
+                        label: Text(
+                          s,
+                          style: theme.textTheme.headline6,
+                        ),
+                        padding: EdgeInsets.zero,
+                        labelPadding: EdgeInsets.zero,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      );
+                    },
+                  )
+                ],
               ),
             ),
           ),
