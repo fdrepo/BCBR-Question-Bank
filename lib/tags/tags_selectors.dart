@@ -19,11 +19,13 @@ FilteredTagsView filteredTagsViewSelector(AppState state) {
   final tags = state.tags;
   bool hasError = tags.status == TagsStatus.failure;
 
+  final query = tags.query.toLowerCase();
+
   bool search = tags.status == TagsStatus.search;
   final tagsSet = tags.tags;
   final tagsList = tagsSet != null && search
       ? tagsSet.where((t) {
-          return t.contains(tags.query);
+          return t.toLowerCase().contains(query);
         }).toList()
       : tagsSet?.toList();
 

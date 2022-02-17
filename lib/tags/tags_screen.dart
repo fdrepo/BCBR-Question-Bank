@@ -161,7 +161,7 @@ class TagsScreen extends StatelessWidget {
         return MasonryGridView.count(
           padding: padding,
           physics: physics,
-          crossAxisCount: width ~/ 300,
+          crossAxisCount: width ~/ 250,
           itemCount: tags.length,
           itemBuilder: (context, i) => _buildTagCard(context, tags[i]),
         );
