@@ -32,7 +32,7 @@ Map<String, AnswerStatus> getAnswerStatus(QuizState quiz) {
 
   final res = <String, AnswerStatus>{};
   if (quiz.isAnswered) {
-    for (final ans in quiz.selectedAnswers) {
+    for (final ans in currentMcq.allAnswers) {
       res[ans] = currentMcq.correctAnswers.contains(ans)
           ? AnswerStatus.correct
           : AnswerStatus.incorrect;
@@ -44,4 +44,22 @@ Map<String, AnswerStatus> getAnswerStatus(QuizState quiz) {
   }
 
   return res;
+}
+
+enum AnswerHighlight { correct, incorrect }
+
+Map<String, AnswerHighlight> getAnswerHighlight(QuizState quiz) {
+  if (!quiz.isAnswered) return {};
+
+  final currentMcq = quiz.currentMcq;
+  if (currentMcq == null) {
+    return {};
+  }
+
+  return {
+    for (final ans in quiz.selectedAnswers)
+      ans: currentMcq.correctAnswers.contains(ans)
+          ? AnswerHighlight.correct
+          : AnswerHighlight.incorrect
+  };
 }

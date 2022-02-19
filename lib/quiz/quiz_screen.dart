@@ -28,8 +28,11 @@ class QuizScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(title: Text(tag)),
+      appBar: AppBar(
+        title: Text(tag, style: theme.textTheme.subtitle1),
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -134,6 +137,7 @@ class QuizScreenBody extends HookWidget {
           totalQuestions: mcqs.length,
           mcq: mcqs[index],
           answerStatus: getAnswerStatus(quiz),
+          answerHightlight: getAnswerHighlight(quiz),
         );
       },
     );
@@ -147,12 +151,14 @@ class McqView extends StatelessWidget {
     required this.totalQuestions,
     required this.mcq,
     required this.answerStatus,
+    required this.answerHightlight,
   }) : super(key: key);
 
   final int questionNumber;
   final int totalQuestions;
   final MCQ mcq;
   final Map<String, AnswerStatus> answerStatus;
+  final Map<String, AnswerHighlight> answerHightlight;
 
   Widget _leadingIcon(String answer) {
     switch (answerStatus[answer]) {
@@ -167,6 +173,17 @@ class McqView extends StatelessWidget {
     }
   }
 
+  Color? _cardBackgroundColor(String answer) {
+    switch (answerHightlight[answer]) {
+      case null:
+        return null;
+      case AnswerHighlight.correct:
+        return Colors.green.shade100;
+      case AnswerHighlight.incorrect:
+        return Colors.red.shade100;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -175,37 +192,36 @@ class McqView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Card(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Wrap(
-                spacing: 10,
-                children: [
-                  Chip(
-                    label: Text('$questionNumber/$totalQuestions'),
-                    padding: EdgeInsets.zero,
-                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  ),
-                  ...mcq.question.split(' ').map(
-                    (s) {
-                      return Chip(
-                        backgroundColor: theme.cardColor,
-                        label: Text(
-                          s,
-                          style: theme.textTheme.headline6,
-                        ),
-                        padding: EdgeInsets.zero,
-                        labelPadding: EdgeInsets.zero,
-                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      );
-                    },
-                  )
-                ],
-              ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Wrap(
+              spacing: 10,
+              children: [
+                Chip(
+                  label: Text('$questionNumber/$totalQuestions'),
+                  padding: EdgeInsets.zero,
+                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                ),
+                ...mcq.question.split(' ').map(
+                  (s) {
+                    return Chip(
+                      backgroundColor: theme.scaffoldBackgroundColor,
+                      label: Text(
+                        s,
+                        style: theme.textTheme.headline6,
+                      ),
+                      padding: EdgeInsets.zero,
+                      labelPadding: EdgeInsets.zero,
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    );
+                  },
+                )
+              ],
             ),
           ),
           for (final answer in mcq.allAnswers)
             Card(
+              color: _cardBackgroundColor(answer),
               child: ListTile(
                 leading: _leadingIcon(answer),
                 title: Text(answer),
